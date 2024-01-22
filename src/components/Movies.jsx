@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { searchMovies } from '../services/api';
 
 const Movies = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleSearch = async () => {
     try {
@@ -17,7 +17,7 @@ const Movies = () => {
   };
 
   const handleMovieClick = (movieId) => {
-    history.push(`/movies/${movieId}`);
+    navigate(`/movies/${movieId}`);
   };
 
   return (

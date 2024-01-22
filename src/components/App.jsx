@@ -9,18 +9,17 @@ const Reviews = lazy(() => import('components/Reviews'));
 
 export function App() {
   return (
-   
-      <Suspense fallback={<div>Loading...</div>}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/movies" element={<Movies />} />
-          <Route path="/movies/:movieId" element={<MovieDetails />} >
+    <Suspense fallback={<div>Loading...</div>}>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/movies" element={<Movies />} />
+        <Route path="/movies/:movieId" element={<MovieDetails />}>
           <Route path="cast" element={<Cast />} />
           <Route path="reviews" element={<Reviews />} />
-</Route>
-        </Routes>
-      </Suspense>
-   
+        </Route>
+      </Routes>
+    </Suspense>
   );
 }
-  export default App
+
+export default App;
