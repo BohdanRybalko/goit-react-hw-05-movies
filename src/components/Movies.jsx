@@ -1,38 +1,34 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { searchMovies } from '../services/api';
+import { SearchContainer, SearchInput, SearchButton, MovieResults, MovieResultItem } from './styles';
 
 const Movies = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
-  const navigate = useNavigate();
 
   const handleSearch = async () => {
-    try {
-      const response = await searchMovies(searchQuery);
-      setSearchResults(response.data.results);
-    } catch (error) {
-      console.error('Error searching movies', error);
-    }
-  };
-
-  const handleMovieClick = (movieId) => {
-    navigate(`/movies/${movieId}`);
   };
 
   return (
-    <div>
+    <SearchContainer>
       <h2>Search Movies</h2>
-      <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
-      <button onClick={handleSearch}>Search</button>
-      <ul>
-        {searchResults.map((movie) => (
-          <li key={movie.id} onClick={() => handleMovieClick(movie.id)}>
-            {movie.title}
-          </li>
+      <div>
+        <SearchInput
+          type="text"
+          placeholder="Search for movies"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <SearchButton onClick={handleSearch}>Search</SearchButton>
+      </div>
+      <MovieResults>
+        {searchResults.map((result) => (
+          <MovieResultItem key={result.id}>
+            <img src={result.poster_url} alt={result.title} />
+            <p>{result.title}</p>
+          </MovieResultItem>
         ))}
-      </ul>
-    </div>
+      </MovieResults>
+    </SearchContainer>
   );
 };
 

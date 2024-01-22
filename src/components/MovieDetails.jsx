@@ -1,26 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getMovieDetails, getMovieCredits, getMovieReviews } from '../services/api';
-import Cast from 'components/Cast';
-import Reviews from 'components/Reviews';
+import {
+  MovieDetailsContainer,
+  MovieDetailsHeader,
+  MovieDetailsContent,
+  MovieDetailsPoster,
+  MovieDetailsInfo,
+} from './styles';
 
 const MovieDetails = () => {
   const { movieId } = useParams();
-  const [movieDetails, setMovieDetails] = useState(null);
-  const [cast, setCast] = useState([]);
-  const [reviews, setReviews] = useState([]);
+  const [movieDetails, setMovieDetails] = useState({});
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
       try {
-        const detailsResponse = await getMovieDetails(movieId);
-        setMovieDetails(detailsResponse.data);
-
-        const creditsResponse = await getMovieCredits(movieId);
-        setCast(creditsResponse.data.cast);
-
-        const reviewsResponse = await getMovieReviews(movieId);
-        setReviews(reviewsResponse.data.results);
+        const response = await fetch(`/api/movies/${movieId}`);
+        const data = await response.json();
+        setMovieDetails(data);
       } catch (error) {
         console.error('Error fetching movie details', error);
       }
@@ -29,28 +26,20 @@ const MovieDetails = () => {
     fetchMovieDetails();
   }, [movieId]);
 
-  if (!movieDetails) {
-    return <div>Loading...</div>;
-  }
-
   return (
-    <div>
-      <h2>{movieDetails.title}</h2>
-      <p>{movieDetails.overview}</p>
-
-      <div>
-        <p>Release Date: {movieDetails.release_date}</p>
-        <p>Runtime: {movieDetails.runtime} minutes</p>   
-      </div>
-
-      <hr />
-
-      <Cast cast={cast} />
-
-      <hr />
-
-      <Reviews reviews={reviews} />
-    </div>
+    <MovieDetailsContainer>
+      <MovieDetailsHeader>{movieDetails.title}</MovieDetailsHeader>
+      <MovieDetailsContent>
+        <MovieDetailsPoster src={movieDetails.poster_url} alt={movieDetails.title} />
+        <MovieDetailsInfo>
+          <p>Release Date: {movieDetails.release_date}</p>
+          <p>Rating: {movieDetails.vote_average}</p>
+          <p>Runtime: {movieDetails.runtime} minutes</p>
+          <p>Genres: {movieDetails.genres?.join(', ')}</p>
+          <p>Overview: {movieDetails.overview}</p>
+        </MovieDetailsInfo>
+      </MovieDetailsContent>
+    </MovieDetailsContainer>
   );
 };
 
