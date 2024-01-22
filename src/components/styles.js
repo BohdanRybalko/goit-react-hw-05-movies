@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const HomeContaineк = styled.div`
+export const HomeContainer = styled.div`
   padding: 20px;
 `;
 
