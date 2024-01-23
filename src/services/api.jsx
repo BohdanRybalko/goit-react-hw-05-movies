@@ -1,12 +1,13 @@
 import axios from 'axios';
 
-const API_KEY = '61e29a7d781370c6066ef4e6795f5d25';
+const API_TOKEN = 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MWUyOWE3ZDc4MTM3MGM2MDY2ZWY0ZTY3OTVmNWQyNSIsInN1YiI6IjY1YWUxZjdlNTQ0YzQxMDBhZTI0ZGJlYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.sF3ftMOy8iN9HBFQU4cf_14roDw45jhm_X2UkCxIVtQ';
 const BASE_URL = 'https://api.themoviedb.org/3';
 
 const api = axios.create({
   baseURL: BASE_URL,
-  params: {
-    api_key: API_KEY,
+  headers: {
+    Authorization: `Bearer ${API_TOKEN}`,
+    'Content-Type': 'application/json',
   },
 });
 

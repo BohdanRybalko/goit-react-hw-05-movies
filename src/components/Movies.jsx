@@ -3,7 +3,7 @@ import { SearchContainer, SearchInput, SearchButton, MovieResults, MovieResultIt
 
 const Movies = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
+  const [searchResults] = useState([]);
 
   const handleSearch = async () => {
   };
