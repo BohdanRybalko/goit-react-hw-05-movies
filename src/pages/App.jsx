@@ -5,7 +5,7 @@ import Movies from './Movies';
 import MovieDetails from './MovieDetails';
 import Cast from './Cast';
 import Reviews from './Reviews';
-import MoviesList from './MoviesList';
+import MoviesList from '../components/MoviesList';
 
 export const App = () => {
   return (
