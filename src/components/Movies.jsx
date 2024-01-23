@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { SearchContainer, SearchInput, SearchButton, MovieResults, MovieResultItem } from './styles';
+import MovieResultItem from './MovieResultItem';
+import { SearchContainer, SearchInput, SearchButton, MovieResults } from './styles';
 
 const Movies = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -22,10 +23,7 @@ const Movies = () => {
       </div>
       <MovieResults>
         {searchResults.map((result) => (
-          <MovieResultItem key={result.id}>
-            <img src={result.poster_url} alt={result.title} />
-            <p>{result.title}</p>
-          </MovieResultItem>
+          <MovieResultItem key={result.id} result={result} />
         ))}
       </MovieResults>
     </SearchContainer>
