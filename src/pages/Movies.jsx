@@ -1,31 +1,57 @@
-import React, { useState } from 'react';
-import SearchForm from '../components/SearchForm';
-import MovieResultItem from '../components/MovieResultItem';
-import { SearchContainer, MovieResults } from '../components/styles';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { searchMovies} from '../services/api'; 
 
 const Movies = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults] = useState([]);
+  const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const query = searchParams.get('query') || '';
 
-  const handleSearch = async (event) => {
-    event.preventDefault();
+  const fetchMovies = async (query) => {
+    try {
+      setLoading(true);
+      setError(null);
 
+      const result = await searchMovies(query);
+      setMovies(result.results);
+    } catch (e) {
+      setError(e.toJSON());
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchMovies(query);
+  }, [query]);
+
+  const updateQuery = (newQuery) => {
+    setSearchParams({ query: newQuery });
   };
 
   return (
-    <SearchContainer>
-      <h2>Search Movies</h2>
-      <SearchForm
-        searchQuery={searchQuery}
-        onSearchInputChange={(e) => setSearchQuery(e.target.value)}
-        onSearchSubmit={handleSearch}
+    <div>
+      <h2>Movies</h2>
+      <p>Search parameter: {query}</p>
+
+      <input
+        type="text"
+        placeholder="Search for movies"
+        value={query}
+        onChange={(e) => updateQuery(e.target.value)}
       />
-      <MovieResults>
-        {searchResults.map((result) => (
-          <MovieResultItem key={result.id} result={result} />
+
+      <ul>
+        {movies.map((movie) => (
+          <li key={movie.id}>{movie.name}</li>
         ))}
-      </MovieResults>
-    </SearchContainer>
+      </ul>
+
+      {loading && <p>Loading...</p>}
+      {error && <p>Error: {error.message}</p>}
+    </div>
   );
 };
 
