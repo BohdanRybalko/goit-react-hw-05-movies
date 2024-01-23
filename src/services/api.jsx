@@ -12,7 +12,7 @@ const api = axios.create({
 });
 
 export const getTrendingMovies = () => api.get('/trending/all/day');
-export const searchMovies = (query) => api.get('/search/movie', { params: { query } });
+export const getSearchMovie = (query) => api.get('/search/movie', { params: { query } });
 export const getMovieDetails = (movieId) => api.get(`/movie/${movieId}`);
 export const getMovieCredits = (movieId) => api.get(`/movie/${movieId}/credits`);
 export const getMovieReviews = (movieId) => api.get(`/movie/${movieId}/reviews`);

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { searchMovies} from '../services/api'; 
+import { getSearchMovie } from '../services/api'; 
+import SearchForm from '../components/SearchForm';
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
@@ -14,7 +15,7 @@ const Movies = () => {
       setLoading(true);
       setError(null);
 
-      const result = await searchMovies(query);
+      const result = await getSearchMovie(query);
       setMovies(result.results);
     } catch (e) {
       setError(e.toJSON());
@@ -31,16 +32,20 @@ const Movies = () => {
     setSearchParams({ query: newQuery });
   };
 
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    fetchMovies(query);
+  };
+
   return (
     <div>
       <h2>Movies</h2>
       <p>Search parameter: {query}</p>
 
-      <input
-        type="text"
-        placeholder="Search for movies"
-        value={query}
-        onChange={(e) => updateQuery(e.target.value)}
+      <SearchForm
+        query={query}
+        onQueryChange={updateQuery}
+        onSearchSubmit={handleSearchSubmit}
       />
 
       <ul>

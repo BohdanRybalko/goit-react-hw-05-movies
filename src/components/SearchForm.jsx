@@ -1,16 +1,15 @@
 import React from 'react';
-import { SearchInput, SearchButton } from './styles';
 
-const SearchForm = ({ searchQuery, onSearchInputChange, onSearchSubmit }) => {
+const SearchForm = ({ query, onQueryChange, onSearchSubmit }) => {
   return (
     <form onSubmit={onSearchSubmit}>
-      <SearchInput
+      <input
         type="text"
         placeholder="Search for movies"
-        value={searchQuery}
-        onChange={onSearchInputChange}
+        value={query}
+        onChange={(e) => onQueryChange(e.target.value)}
       />
-      <SearchButton type="submit">Search</SearchButton>
+      <button type="submit">Search</button>
     </form>
   );
 };
