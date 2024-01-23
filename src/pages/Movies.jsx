@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { getSearchMovie } from '../services/api'; 
 import SearchForm from '../components/SearchForm';
+import MovieList from '../components/MovieList';
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
@@ -48,11 +49,7 @@ const Movies = () => {
         onSearchSubmit={handleSearchSubmit}
       />
 
-      <ul>
-        {movies.map((movie) => (
-          <li key={movie.id}>{movie.name}</li>
-        ))}
-      </ul>
+      <MovieList movies={movies} />
 
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error.message}</p>}
