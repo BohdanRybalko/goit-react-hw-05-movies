@@ -7,15 +7,16 @@ const Movies = () => {
   const [searchResults, setSearchResults] = useState([]);
 
   const handleSearch = async (event) => {
-    event.preventDefault();
-    const fakeSearchResults = [
-      { id: 1, title: 'Movie 1', poster_url: 'url1' },
-      { id: 2, title: 'Movie 2', poster_url: 'url2' },
-      
-    ];
+  event.preventDefault();
 
-    setSearchResults(fakeSearchResults);
-  };
+  try {
+    const response = await (searchQuery);
+    const searchResults = response.data.results;
+    setSearchResults(searchResults);
+  } catch (error) {
+    console.error('Error fetching search results', error);
+  }
+};
 
   return (
     <SearchContainer>
