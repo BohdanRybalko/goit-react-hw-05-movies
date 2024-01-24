@@ -5,17 +5,14 @@ import Movies from './Movies';
 import MovieDetails from './MovieDetails';
 import Cast from './Cast';
 import Reviews from './Reviews';
-import MoviesList from '../components/MoviesList';
+
 
 export const App = () => {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/" index={<Home />} />
       <Route path="movies" element={<Movies />}>
-        <Route index element={<MoviesList />} />
-        <Route path="search" element={<MovieDetails/>} />
         <Route path=":movieId" element={<MovieDetails />}>
-          <Route index element={<Cast />} />
           <Route path="cast" element={<Cast />} />
           <Route path="reviews" element={<Reviews />} />
         </Route>

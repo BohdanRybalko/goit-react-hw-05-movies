@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getMovieDetails, getMovieCredits, getMovieReviews } from '../services/api';
+import { getMovieDetails } from '../services/api';
 
 const MovieDetails = () => {
   const { movieId } = useParams();
@@ -11,14 +11,12 @@ const MovieDetails = () => {
   useEffect(() => {
     const fetchMovieDetailsData = async () => {
       try {
-        const responseDetails = await getMovieDetails(movieId);
-        setMovieDetails(responseDetails.data);
+        const response = await getMovieDetails(movieId);
+        const { data: movieDetailsData, credits, reviews } = response.data;
 
-        const responseCredits = await getMovieCredits(movieId);
-        setMovieCredits(responseCredits.data.cast);
-
-        const responseReviews = await getMovieReviews(movieId);
-        setMovieReviews(responseReviews.data.results);
+        setMovieDetails(movieDetailsData);
+        setMovieCredits(credits.cast);
+        setMovieReviews(reviews.results);
       } catch (error) {
         console.error('Error fetching movie details', error);
       }
