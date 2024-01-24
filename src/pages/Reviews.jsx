@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
-
-const Reviews = ({ movieId }) => {
+import { useParams } from 'react-router-dom';
+import { getMovieReviews} from '../services/api';
+const Reviews = () => {
   const [reviews, setReviews] = useState([]);
-
+const { movieId } = useParams();
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await fetch(`/api/movies/${movieId}/reviews`);
-        const data = await response.json();
+        const {data} = await getMovieReviews(movieId);
         setReviews(data.results);
       } catch (error) {
         console.error('Error fetching reviews', error);

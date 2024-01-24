@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-
-const Cast = ({ movieId }) => {
+import { getMovieCredits } from 'services/api';
+import {useParams} from 'react-router-dom';
+const Cast = () => {
   const [cast, setCast] = useState([]);
-
+  const { movieId } = useParams();
   useEffect(() => {
     const fetchCast = async () => {
       try {
-        const response = await fetch(`/api/movies/${movieId}/cast`);
-        const data = await response.json();
+        const {data} = await getMovieCredits(movieId);
+       
         setCast(data.cast);
       } catch (error) {
         console.error('Error fetching cast details', error);
