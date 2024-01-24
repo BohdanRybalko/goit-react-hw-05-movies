@@ -11,21 +11,21 @@ const Movies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('query') || '';
 
-  const fetchMovies = async (query) => {
-    try {
-      setLoading(true);
-      setError(null);
-
-      const result = await getSearchMovie(query);
-      setMovies(result.results);
-    } catch (e) {
-      setError(e.toJSON());
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchMovies = async (query) => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        const result = await getSearchMovie(query);
+        setMovies(result.results);
+      } catch (e) {
+        setError(e.toJSON());
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchMovies(query);
   }, [query]);
 
@@ -35,7 +35,7 @@ const Movies = () => {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    fetchMovies(query);
+    
   };
 
   return (
