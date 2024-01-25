@@ -30,7 +30,7 @@ const Cast = () => {
       <p>{actor.name}</p>
       <p>Character: {actor.character}</p>
       <img
-        src={actor.poster_path ? `https://image.tmdb.org/t/p/w500/${actor.poster_path}` : defaultImg}
+        src={actor.profile_path ? `https://image.tmdb.org/t/p/w500/${actor.profile_path}` : defaultImg}
         width={250}
         alt={`${actor.name} Poster`}
       />
