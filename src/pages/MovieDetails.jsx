@@ -25,15 +25,12 @@ const MovieDetails = () => {
     <div>
       <h2>{movieDetails.title}</h2>
       <p>{movieDetails.overview}</p>
-      {movieDetails.poster_path ? (
-        <img
-          src={`https://image.tmdb.org/t/p/w500/${movieDetails.poster_path}`}
-          width={250}
-          alt="Movie Poster"
-        />
-      ) : (
-        <img src={defaultImg} width={250} alt="Poster" />
-      )}
+
+      <img
+        src={movieDetails.poster_path ? `https://image.tmdb.org/t/p/w500/${movieDetails.poster_path}` : defaultImg}
+        width={250}
+        alt="Movie Poster"
+      />
 
       <Link to="cast">Cast</Link>
       <Link to="reviews">Reviews</Link>
