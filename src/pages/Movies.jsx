@@ -29,13 +29,9 @@ const Movies = () => {
     fetchMovies(query);
   }, [query]);
 
-  const updateQuery = (newQuery) => {
-    setSearchParams({ query: newQuery });
-  };
-
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    
+    setSearchParams({ query: query });
   };
 
   return (
@@ -45,7 +41,7 @@ const Movies = () => {
 
       <SearchForm
         query={query}
-        onQueryChange={updateQuery}
+        onQueryChange={(newQuery) => setSearchParams({ query: newQuery })}
         onSearchSubmit={handleSearchSubmit}
       />
 
