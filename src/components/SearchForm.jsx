@@ -1,17 +1,22 @@
 import React from 'react';
 
-const SearchForm = ({ query, onQueryChange, onSearchSubmit }) => {
+const SearchForm = ({  onSearchSubmit }) => {
+const handleSummit =(e) =>{
+ e.preventDefault();
+onSearchSubmit(e.target.elements.query.value)
+}
   return (
-    <form onSubmit={onSearchSubmit}>
+    <form onSubmit={handleSummit }>
       <input
         type="text"
         placeholder="Search for movies"
-        value={query}
-        onChange={(e) => onQueryChange(e.target.value)}
+      name='query'
+required
       />
       <button type="submit">Search</button>
     </form>
   );
 };
+
 
 export default SearchForm;

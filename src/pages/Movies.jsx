@@ -11,14 +11,15 @@ const Movies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('query') || '';
 
-  useEffect(() => {
+   useEffect(() => {
+if(!query)return;
     const fetchMovies = async (query) => {
       try {
         setLoading(true);
         setError(null);
 
         const result = await getSearchMovie(query);
-        setMovies(result.results);
+        setMovies(result.data.results)
       } catch (e) {
         setError(e.toJSON());
       } finally {
@@ -29,8 +30,8 @@ const Movies = () => {
     fetchMovies(query);
   }, [query]);
 
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
+   const handleSearchSubmit = (query ) => {
+   
     setSearchParams({ query: query });
   };
 
@@ -41,7 +42,6 @@ const Movies = () => {
 
       <SearchForm
         query={query}
-        onQueryChange={(newQuery) => setSearchParams({ query: newQuery })}
         onSearchSubmit={handleSearchSubmit}
       />
 
