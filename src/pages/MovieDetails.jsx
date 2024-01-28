@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, Outlet, useParams } from 'react-router-dom';
+import { Link, Outlet, useParams, useNavigate } from 'react-router-dom';
 import { getMovieDetails } from '../services/api';
 
 const defaultImg = 'https://ireland.apollo.olxcdn.com/v1/files/0iq0gb9ppip8-UA/image;s=1000x700';
@@ -7,6 +7,7 @@ const defaultImg = 'https://ireland.apollo.olxcdn.com/v1/files/0iq0gb9ppip8-UA/i
 const MovieDetails = () => {
   const { movieId } = useParams();
   const [movieDetails, setMovieDetails] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchMovieDetailsData = async () => {
@@ -20,6 +21,10 @@ const MovieDetails = () => {
 
     fetchMovieDetailsData();
   }, [movieId]);
+
+  const handleGoBack = () => {
+    navigate('/');
+  };
 
   return (
     <div>
@@ -35,6 +40,7 @@ const MovieDetails = () => {
       <Link to="cast">Cast</Link>
       <Link to="reviews">Reviews</Link>
       <Outlet />
+      <button onClick={handleGoBack}>Go Back</button>
     </div>
   );
 };
